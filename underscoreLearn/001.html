@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>underscore</title>
+</head>
+<body>
+    <p>
+        undefined处理
+            用if( a === undefined ){}来判断不可靠
+            应该用 void 0 
+        iteratee迭代器  _.map(obj,iteratee,context)
+            两部分  1.被迭代集合  2.函数(迭代器),处理当前迭代元素
+
+            内置函数cb  cb(iteratee,context)
+                _.map()的第二个参数iteratee可能是函数，对象，字符串，通过cb将其统一处理为函数
+            内置函数optimizeCb
+                当传入的value是一个函数时，optimizeCb将它处理成最中的iteratee
+                var optimizeCb = function(func,context,argCount){}
+                思路：根据参数个数分情况进行优化
+    </p>
+</body>
+</html>
