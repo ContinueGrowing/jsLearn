@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>你不知道的js</title>
+</head>
+<body>
+    <ul>
+        <li>非严格模式下，如果全局作用域中没有找到某个变量，就会创建一个</li>
+        <li></li>
+    </ul>
+    <ul id="编译">
+        <!-- 源代码执行前 -->
+        <li>分词/词法分析</li>
+        <li>解析/语法分析  将词法组合成一个AST(抽象语法树 Abstract Santax Tree)</li>
+        <li>代码生成  将AST转换为可执行的代码</li>
+    </ul>
+    <ol>
+        <li>引擎  
+                从头到尾负责整个js程序的编译及执行过程  
+                查找变量并赋值，找不到就抛异常
+                LHS  找到要赋值给谁  
+                    非严格模式下，如果全局作用域中没有找到某个变量，就会创建一个
+                RHS  找到值是多少  
+                    不论严格模式还是非严格模式，找不到会抛出 ReferenceError 异常
+                    调用非函数类型的变量，调用null、undefined类型的值中的属性，抛出 TypeError 异常
+                    ReferenceError 同作用域判别失败相关
+                    TypeError 代表作用域判别成功，但是对结果的操作是非法的
+        </li>
+        <li>编译器  负责语法分析和代码生成等  声明变量</li>
+        <li>
+            作用域  确定当前执行的代码对变量的访问权限  协助引擎查找变量
+            <ol>
+                <li>
+                    词法作用域
+                    欺骗词法 eval("var a=1;"),假装它的语句是原来就在这个位置的，修改了词法作用域
+                </li>
+                <li>
+                    函数声明
+                        不能是匿名的
+                        function foo(){}
+                    函数表达式
+                        可以是匿名的
+                        (function foo(){})(this)
+                </li>
+                <li>
+                    es5      
+                        函数作用域 var
+                    es6
+                        块级作用域 let  {...} let没有变量提升
+                </li>
+            </ol>
+        </li>
+    </ol>
+</body>
+</html>

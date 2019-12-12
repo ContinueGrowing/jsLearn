@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>underscore  map-reduce</title>
+</head>
+<body>
+    <p>
+        js中 Array.prototype 中提供了map和reduce函数
+            函数式编程，处理列表的重要思路
+        map(map)  一一对应，将各个元素逐个映射为新元素
+
+        reduce    由多对一，迭代列表中的每个元素，按照一定规则，合并到一个目标对象上
+            内部函数 createReducer 创建reduce函数
+            reduce的方向 dir 
+            _.reduce或_.reduceRight时是否传入了第三个参数(规约起点)
+        真值检测函数
+            基于函数操作的  _.each  _.map  _.reduce
+            基于逻辑判断的  _.filter  _.reject  _.every  _.some
+            依赖于用户提供的真值检测函数(predicate)
+    </p>
+</body>
+</html>

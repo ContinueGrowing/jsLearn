@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery extend</title>
+    <script src="./jQuery 1.0.0.js"></script>
+</head>
+<body>
+    <ol>
+        <li>
+            jQuery无new构建实例
+                $就是jQuery的别称
+                $() 就是在创建 jQuery实例对象
+        </li>
+        <li>共享原型 设计</li>
+        <li>
+            extend 源码解析
+            两种使用方式 1.源码内部使用 2.用户在自己的js中使用
+        </li>
+    </ol>
+    <script>
+        console.log($())
+        //给第一个参数对象扩展第二个参数对象的值
+        //任意对象扩展
+        // var obj=$.extend({},{name:"max",age:"20"},{name:"aaa",sex:"rrrr"},{sex:"eee",age:"888"})
+        // var obj=$.extend(true,{},{name:"max",age:"20"})
+        
+        //true 深拷贝 默认为false
+        //如果某一个对象的 某一个属性值 为数组或对象时 相当于再做一次浅拷贝
+        // var ret ={name:"max",list:{age:30}};
+        // var res ={list:{sex:"男"}};
+        // var objDeep=$.extend(true,ret,res)
+        // console.log(objDeep)
+
+        
+        //给jQuery本身扩展新的属性和方法
+        /*$.extend({
+            work:function(){
+                console.log("work")
+            }
+        })
+        $.work()*/
+        // jQuery.work();
+        //给 jQuery的实例对象扩展
+        $.fn.extend({
+            sex:"男",
+            func:function(){
+                console.log("func")
+            }
+        })
+        console.log($().sex);    //男
+        $().func();    //男
+        
+    </script>
+</body>
+</html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>underscore</title>
+    <title>underscore  map</title>
 </head>
 <body>
     <p>
@@ -13,11 +13,15 @@
             应该用 void 0 
         iteratee迭代器  _.map(obj,iteratee,context)
             两部分  1.被迭代集合  2.函数(迭代器),处理当前迭代元素
+            map的实现思路：
+                创建一个新的列表或者元素
+                遍历原列表或者原对象的值，用指定的函数func作用于每一个被遍历到的元素，
+                输出一个新的元素，放入新列表或者对象中
 
-            内置函数cb  cb(iteratee,context)
+            内置函数cb  cb(iteratee,context)            优化
                 _.map()的第二个参数iteratee可能是函数，对象，字符串，通过cb将其统一处理为函数
-            内置函数optimizeCb
-                当传入的value是一个函数时，optimizeCb将它处理成最中的iteratee
+            内置函数optimizeCb              生成
+                当传入的value是一个函数时，optimizeCb将它处理成最终的iteratee
                 var optimizeCb = function(func,context,argCount){}
                 思路：根据参数个数分情况进行优化
     </p>

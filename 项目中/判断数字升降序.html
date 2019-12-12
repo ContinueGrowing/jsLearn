@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>判断数字升降序</title>
+</head>
+<body>
+    <ul>
+        <li>思路</li>
+        <li>
+            升序
+                每个数字减去下标结果相同
+        </li>
+        <li>
+            降序
+                每个数字加上下标结果相同
+        </li>
+    </ul>
+    <script>
+        var str = "325565";
+        var result = psdJudge(str);
+        console.log(result)
+        function psdJudge(str){
+            var arr = str.split("");
+            var i=0;
+            var res1=[],res2=[];
+            for(;i<arr.length;i++){
+                res1.push(arr[i]-i);
+                res2.push(Number(arr[i])+i);
+            }
+            return (Math.max(...res1)==Math.min(...res1)) 
+                    || (Math.max(...res2)==Math.min(...res2))
+        }
+    </script>
+</body>
+</html>
