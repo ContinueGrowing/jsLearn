@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>闭包</title>
+</head>
+<body>
+    <p>
+        引擎的垃圾回收机制会释放不再使用的内存空间
+        闭包的神奇之处是可以阻止这件事情的发生，
+        内部作用域依然存在，并没有被回收，
+        原因是bar()在使用
+        bar()依然持有对该作用域的引用，这个引用就叫做闭包
+    </p>
+    <ul>
+        <li>
+            闭包的形式
+        </li>
+        <li>
+            1.return bar;
+        </li>
+        <li>
+            2.foo(){
+                baz(bar)
+            }
+            baz(fn){
+                fn()
+            }
+        </li>
+        <li>
+            3.var fn;
+            foo(){
+                fn=baz;
+            }
+            fn()
+        </li>
+    </ul>
+</body>
+</html>

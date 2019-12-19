@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery $.Callbacks</title>
+    <script src="./underscore.js"></script>
+</head>
+<body>
+    <ol>
+        <li>$.Callbacks用于管理函数队列</li>
+        <li>通过add添加处理函数到队列当中,</li>
+        <li>通过fire，按照添加函数的顺序，依次执行这些处理函数</li>
+    </ol>
+    <script>
+        //获取Callbacks实例
+        /*
+        * once(默认)  函数队列只执行一次，即调用多次fire，只有第一次执行  
+        * unique    队列里不能添加重复的函数
+        * stopOnFalse   队列里的函数是依次执行的，当某个函数的返回值是false时，不再执行剩下的函数
+        * memory    当函数队列fire一次后，内部会记录当前fire的参数，当下一次再add的时候，add的函数会立即执行
+        */
+        
+        // var cb = $.Callbacks();
+        // cb.add(function(){
+
+        // })
+        // cb.fire();
+        
+        var _="aaa";
+        var cb=_.callbacks("memory");
+        cb.add(function(){
+            console.log("add")
+        })
+        cb.add(function(){
+            console.log("memory")
+        })
+        cb.fire()
+        cb.add(function(){
+            console.log("add2222")
+        })
+    </script>
+</body>
+</html>
