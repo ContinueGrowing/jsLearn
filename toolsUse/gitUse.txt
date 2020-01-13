@@ -1,0 +1,4 @@
+从远程库克隆一个项目
+1.git init 先初始化一个本地git仓库
+2.git clone 
+
