@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>正则实现密码校验</title>
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <input type="password" id="psd">
+    <p></p>
+    <script>
+        // 使用正则实现密码校验功能。
+        // 题目要求：
+        // 密码长度6-12位，由数字、小写字符、大写字母组成，但必须至少包括2种字符。
+        var psd = document.querySelector("#psd");
+        psd.onblur = function(e){
+            check(e.target.value)
+        }
+        function check(val){
+            var reg=/^[a-z]{}$/g;
+            var res = reg.test(val);
+            console.log(res);
+        }
+    </script>
+</body>
+
+</html>
