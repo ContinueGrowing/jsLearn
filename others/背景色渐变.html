@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>背景色渐变</title>
+    <style>
+        .box{
+            width: 200px;
+            height: 80px;
+            /* background: -webkit-linear-gradient(red, blue); 
+            background: -o-linear-gradient(red, blue); 
+            background: -moz-linear-gradient(red, blue); 
+            background: linear-gradient(red, blue);  */
+            /* 默认从上到下 */
+            /* background: -webkit-linear-gradient(red 10%,orange 30%, yellow 50%); */
+            /* 手动设置方向 */
+            /* background: linear-gradient(direction, color-stop1, color-stop2, ...); */
+            /* 设置角度线性渐变 */
+            /* background: -webkit-linear-gradient(0deg, red,orange, yellow); */
+        }
+        .box1{
+            width: 100px;
+            height: 100px;
+            border: 1px solid green;
+            border-radius: 50px;
+            background: -webkit-radial-gradient(#000, #fff, lightblue); /* Safari 5.1 - 6.0 */
+        }
+    </style>
+</head>
+
+<body>
+    <h5>默认从上到下</h5>
+    <div class="box"></div>
+    <h5>background: linear-gradient(direction, color-stop1, color-stop2, ...);</h5>
+    <div class="box1"></div>
+</body>
+
+</html>

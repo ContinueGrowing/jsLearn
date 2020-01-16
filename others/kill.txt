@@ -1,0 +1,2 @@
+1.npm install vconsole
+    客户端使用的开发者工具，和浏览器功能基本相同

@@ -23,7 +23,7 @@
             check(e.target.value)
         }
         function check(val){
-            var reg=/^[a-z]{}$/g;
+            var reg=/^[a-zA-Z0-9_]{6,12}$/g;
             var res = reg.test(val);
             console.log(res);
         }
