@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>require.js</title>
+    <script src="https://cdn.bootcss.com/require.js/2.3.6/require.js"></script>
+</head>
+<body>
+    <script>
+        // require.config({
+        //     paths:{
+        //         'a':'./a',
+        //         'b':'./b',
+        //     }
+        // })
+
+        // require(['a','b'],function(a,b){
+        //     console.log(a)
+        //     console.log(b)
+        // })
+        
+        /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+        // function fn( require, exports, module){
+        //     /* require("c.js")  */
+        //     var age = "30";
+        //     var b = require("b.js");
+        //     exports.age = age;
+        // }
+        
+        // var str = fn.toString();
+        // var REQUIRE_RE = /\brequire\s*\(\s*(["'])(.+?)\1\s*\)/g;
+        
+        // var reg = /\s*\/\*\s*require\s*\(\s*(["'])(.+?)\1\s*\)\s*\*\//g;
+
+        // var con = [];
+        // str.replace(reg, function(context ,m1 ,m2){
+        //     con.push(context);
+        // })
+        // for(var i = 0;i<con.length;i++){
+        //     str = str.replace(con[i],"")
+        // }
+        // str.replace(REQUIRE_RE, function(context ,m1 ,m2){
+        //     console.log(context)
+        //     console.log(m1)
+        //     console.log(m2)  // => c.js  b.js
+        // })
+        // var reg = /^\/\*\s*require\s*\(\s*(["'])(.+?)\1\s*\)\s*\*\/$/;
+        // var str = "/*require('a.js')*/";
+        // console.log(reg.test(str))
+    </script>
+</body>
+</html>

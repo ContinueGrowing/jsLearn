@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h4>模块加载器的结构</h4>
+    <p>模块部份</p>
+    <p>每个模块创建都先初始化数据，存储在缓存对象中</p>
+    <ol>
+        <li>
+            数据初始化
+            <p>加载器中设计了一个名为Module的构造函数，每个模块都是此构造函数的实例对象</p>
+            <p>构造函数中给实例对象扩展了未来所需要用到的属性及方法</p>
+            <p>uri   当前模块的绝对路径地址</p>
+            <p>deps  模块的依赖列表</p>
+        </li>
+        <li>
+            模块存储
+            <p>加载器中设计了一个cache缓存对象，每个文件都会存储在cache对象中</p>
+            <p>存储方式 ： {"当前模块绝对路径":new Module()}</p>
+            <p>当前模块绝对路径是通过 资源定位 方法实现的</p>
+        </li>
+    </ol>
+    <p>资源部份</p>
+    <p>两大核心</p>
+    <ol>
+        <li>(核心)依赖管理</li>
+        <li>
+            (核心)资源定位
+            <p>加载器中设计了resolve方法，把模块名解析成 “ 绝对路径格式 ” </p>
+            <p>
+                startUp.use(["a.js","b.js"])
+                这个启动方法在启动时会调用传入数组列表中的模块
+            </p>
+        </li>
+        <li>
+            动态加载script文件
+            通过resolve方法，模块名=>绝对路径
+            动态创建script document.create("script") src指向当前模块的绝对路径地址
+            加载文件，同时，解析当前模块所依赖的模块，存入[]
+        </li>
+    </ol>
+</body>
+</html>

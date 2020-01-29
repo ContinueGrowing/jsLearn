@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>es6模块化的理论知识</title>
+</head>
+<body>
+    <p>es6之前没有模块化，为了解决问题，提出了common.js/seajs/requirejs</p>
+    <p>es6汲取各种优点，支持异步加载</p>
+    <ol>
+        <li>
+            新增两个关键字:export和import
+        </li>
+        <li>
+            export  暴露
+            export default 为模块指定默认输出，一个模块只能使用一次
+            import  引入
+            import {bar,foo,test,obj} from './util.js'
+            foo()
+        </li>
+        <li>
+            es6模块运行机制
+            动态引用(import {bar,foo,test,obj} from './util.js'),
+            引用进来后,变量不会被缓存，而是成为一个执行被加载模块的引用，
+            脚本执行时，根据只读引用，到被加载的那个模块中去取值
+        </li>
+    </ol>
+</body>
+</html>

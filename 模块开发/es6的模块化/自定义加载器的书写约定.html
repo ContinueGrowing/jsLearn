@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h4>模块的定义</h4>
+    <p>约定:一个文件只包含一个模块</p>
+    <p>
+        使用全局函数define来定义模块
+        define(factory[require,exports,module])
+        exports
+        require
+        module  存储模块的信息，id  模块的唯一标识
+                deps  依赖列表
+                exports  对外提供的接口对象
+    </p>
+    <h4>自定义加载器</h4>
+    <p>模块加载器会从factory.toString()中解析出当前模块所依赖的模块，
+        他是一个由模块标识所组成的数组
+    </p>
+    <ol>
+        <li>
+            模块代码中，第一个参数必须命名为require
+        </li>
+        <li>
+            不要重命名require函数，或在任何作用域中重新赋值
+        </li>
+        <li>
+            require的参数值必须是字符串直接量，不能是表达式
+        </li>
+    </ol>
+</body>
+</html>

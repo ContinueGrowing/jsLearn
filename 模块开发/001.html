@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h4>Commonjs</h4>
+    <p>
+        加载模块是同步的,加载完成后才执行后面的操作，Node.js使用
+        <br>
+        Node.js主要用于服务器编程，模块都存在本地硬盘中，加载比较快
+        <br>
+        所以采用Commonjs规范
+    </p>
+    <p>Commonjs规范分为三部分</p>
+    <ol>
+        <li>
+            module(模块标识)
+            <br>
+            在每一个模块的内部，就代表当前模块
+        </li>
+        <li>
+            require(模块引用)
+            <br>
+            用来加载外部模块，读取并执行js文件，返回该模块的exports对象
+        </li>
+        <li>
+            exports(模块定义)
+            <br>
+            属性的对外接口，用于导出当前模块的方法或变量
+        </li>
+    </ol>
+    <h4>AMD(浏览器的实现是require.js)</h4>
+    <p>
+        AMD是异步模块定义，
+        <br>
+        它采用异步的方式加载模块，
+        <br>
+        define([tools],function(){})
+        <br>
+        define  定义
+        <br>
+        require 加载
+        <br>
+        require(['modules'],callback)
+        <br>
+        回调函数只有在前面的modules都加载完毕之后才会执行
+        <br>
+        解决了依赖性的问题
+    </p>
+    <h4>CMD(浏览器的实现是 sea.js)</h4>
+    <p>
+        CMD与AMD一样，只是模块定义和加载方式有所不同
+        <br>
+        define(function(require,exports,module){
+            //模块代码
+        })
+        <br>
+        define  定义
+        <br>
+        require  导入其它模块
+        exports  导出
+        module  一个对象，存储了相关的属性和方法
+        <br>
+        CMD推崇依赖就近，延迟执行
+        <br>
+        文件是提前加载好的，只有在require的时候才去执行
+    </p>
+
+</body>
+</html>
