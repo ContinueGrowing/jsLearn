@@ -1,0 +1,4 @@
+1.  jQuery 库   共别人调用的工具库
+    vue 框架    自己编写代码，然后框架调用解析生成代码
+                vue全家桶（vue + vue-rouer + vuex + axios）
+                数据驱动UI

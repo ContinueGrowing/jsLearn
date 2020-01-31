@@ -1,4 +1,13 @@
 从远程库克隆一个项目
 1.git init 先初始化一个本地git仓库
 2.git clone 
+    使用https方式需要输入用户名和密码
+    使用ssh方式不需要输入用户名和密码
+3.一般推送到远程库需要4步
+    git pull
+    git add .
+    git commit -m ""
+    git push
+4.
+
 
