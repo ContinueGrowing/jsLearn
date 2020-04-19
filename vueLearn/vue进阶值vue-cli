@@ -1,0 +1,280 @@
+1.vue-cli是vue.js的脚手架，自动生成vue+webpack的项目模板
+    vue init webpack-simple 项目名
+    vue init webpack 项目名
+    vue create 项目名
+2.vue-cli系统包含的组件
+    <1>cli是一个全局安装的npm包，提供了vue命令
+    <2>cli服务是一个npm包，局部安装在每个@vue/cli创建的项目中
+    <3>cli插件为vue项目提供可选功能的npm包
+3.postcss.config.js css预处理器
+4.组件化
+    A、组件创建的3种方式
+
+        <1>   Vue.extend({})
+            例如：
+                var myComp = Vue.extend({
+                    template:"<div>组件</div>"
+                })
+
+        <2>   <template>标签,加上id属性
+            例如：
+                <template id="myComp">
+                    <div>组件</div>
+                </template>
+        <3>   <script>标签,加上id属性和type="text/x-template",使浏览器不编译里面的代码
+            例如：
+                <script id="myComp" type="text/x-template">
+                    <div>组件</div>
+                </script>
+    
+    B、组件注册2种方式
+        <1>创建方式为 Vue.extend()，
+            全局注册方式为 Vue.component("my-comp",myComp)
+            局部注册 components:{"my-comp":myComp}
+        <2>创建方式为 template和script标签
+            全局注册方式为
+            Vue.component("my-comp",{
+                template:"#myComp"
+            })
+            局部注册 
+            components:{
+                "my-comp":{
+                    template:"#myComp"
+                }
+            }
+    C、处理边界情况
+        <1> 访问根实例
+            获取根组件的数据 this.$root.foo
+            访问根组件的数据 this.$root.foo = 2
+        <2> 访问父级组件实例
+            this.$parent.xxx
+        <3> 访问子组件实例或子元素
+            this.$refs.myComp
+        <4> 依赖注入 属性是非响应的 （不好 ）
+            //要提供给后代的属性或方法
+            provide:function(){
+                return {
+                    //提供给后代
+                    getMap:this.getMap
+                }
+            }
+            //后代使用  拿到getMap
+            inject: ['getMap']
+        <5> 强制更新  this.$forceUpdate()
+5.mixin
+6.Vuex
+    原理:
+    A、5种基本对象
+        <1> state 存储状态
+        <2> getters 数据获取之前再次编译，可以理解为state的计算属性
+        <3> mutations 修改状态，同步的。
+                        使用$store.commit('',param)触发
+        <4> actions 异步操作  组件中使用$store.dispatch('')触发
+        <5> modules store的子模块，为了方便状态管理而使用的
+    B、使用步骤
+        <1> 安装  npm install vuex --save
+        <2> 引用Vuex
+            import Vue from 'vue' 
+            import Vuex from 'vuex'
+            Vue.use(Vuex) 
+        <3> 创建仓库store   
+            const store =new Vuex.Store({})
+    C、store有4个子对象
+        state   用于存储数据
+        mutations   唯一修改state的方法，同步修改
+        actions     调用mutations修改state,actions事件本身是异步的，提交的是mutations，而不是直接变更状态
+        getters     对state进行数据筛选、过滤
+        var myStore = new Vuex.Store({
+            state:{
+                name:'haha'
+            },
+            getters:{
+                counts(state){
+                    return state.todos.length
+                }
+            },
+            getters:{
+                //获取数据
+            },
+            mutations:{
+                //显示更改state里的数据
+                onDel(state,id){
+                    state.todos = state.todos.filter(item => item.id !=id)
+                }
+            },
+            actions:{
+                //页面中用this.$store.dispatch('onDel',id)来触发
+                //异步处理
+                onDel({commit},id){
+                    commit('onDel'，id)//触发mutations里面的方法
+                }
+            }
+        })
+
+    import {mapState} from 'vuex'
+    computed:{
+        //效果和this.$store.state.todos一样
+        ...mapState({
+            'todos'
+        })
+    }
+
+    import {mapGetters} from vuex    
+    computed:{
+        ...mapGetters({
+            todoCounts:"counts"
+        })
+    }
+7.vue-router
+    <1> 基础用法
+        route 是一条路由
+        routes 是一组路由，把上面的route结合起来，形成一个数组
+        router 是一个机制，相当于一个管理者，来管理路由
+        this.$router 相当于一个 全局 的路由器对象，包含了很多属性和对象（比如 history 对象），
+                     任何页面都可以调用其 push(), replace(), go() 等方法。
+        this.$route 表示 当前 路由对象，每一个路由都会有一个 route 对象，是一个局部的对象，
+                    可以获取对应的 name, path, params, query 等属性。
+        this.$router.push()  会向 history 栈添加一个新的记录，所以，当用户点击浏览器后退按钮时，则回到之前的 URL。
+                             点击 <router-link :to="..."> 等同于调用 router.push(...)。
+        this.$router.replace()  不会向 history 栈添加一个新的记录,点击后退按钮，不会回到之前的URL
+
+        注意传参的问题:                     
+        const userId = '123';
+        //有path的时候params不生效
+        this.$router.push({path:`/user/${userId}`});  //->/user/123
+        this.$router.push({name:'user', params:{userId}});  //->/user/123
+        //这里的 params 不生效
+        this.$router.push({path:'/user', params:{userId}});  //->/user
+        //query需要和path配合使用   params需要和name配合使用
+        this.$router.push({path:'/user', query:{userId: '123'}});
+
+        1、手写完整的 path:
+            this.$router.push({path: `/user/${userId}`});
+            获取参数：this.$route.params.userId
+        2、用 params 传递：post方式
+            this.$router.push({name:'user', params:{userId: '123'}});
+            获取参数：this.$route.params.userId
+            url 形式：url 不带参数，http:localhost:8080/#/user
+        3、用 query 传递：get方式
+            this.$router.push({path:'/user', query:{userId: '123'}});
+            获取参数：this.$route.query.userId
+            url 形式：url 带参数，http:localhost:8080/#/user?userId=123
+
+
+        使用步骤：
+            安装  npm install vue-router --save 或直接引入js
+            引用  import Vue from 'vue'
+                  import VueRouter from 'vue-router'
+                  Vue.use(VueRouter)
+            创建路由表
+                var router = new VueRouter（{
+                    routes:[{
+                        path:"",
+                        component:Home
+                    }]
+                }
+            A.动态路由匹配
+                $route.params.id
+                routes:[{
+                    path:'user/:id',
+                    component:User
+                }]
+            B.嵌套路由
+                <router-view></router-view>
+            C.编程式导航
+                <router-link>创建a标签
+                //相当于
+                router.push
+                    router.push('home') //字符串
+                    router.push({path:'home'})  //对象
+                    //命名的路由  post方式传参
+                    router.push({name:'user',params:{userId:'123'}})
+                    //带查询参数，变成/register?plan=private get方式传参
+                    router.push({path:'register',query:{plan:'private'}})
+                router.replace
+                router.go
+            D.命名路由
+                要连接到一个命名路由，可以给<router-link to="{name:'',params:''}">
+            E.命名视图
+                如果一个页面想要同时展示多个视图
+                    <router-view></router-view>
+                    <router-view name='a'></router-view>
+                    <router-view name='b'></router-view>
+                //路由文件
+                const router = new VueRouter({
+                    routes:[{
+                        path:'/',
+                        components:{
+                            default:Foo,
+                            a:Bar,
+                            b:Foo,
+                        }
+                    }]
+                })
+            F.重定向和别名
+                重定向   /a => /b    /b => /b 
+                //普通重定向
+                routes:[{ path:"/a",redirect:'/b'}]
+                //重定向带别名
+                routes:[{ path:"/a",redirect:{name:'user'}}]
+                //重定向带方法
+                routes:[{ path:"/a",redirect: to =>{
+                    //接收目标路由作为参数
+                    //return 重定向的字符串路径或路径对象
+                }}]
+            G.路由传参
+                <router-link to="{path:''}"></router-link>    //效果和router.push()一样
+    <2> 进阶用法
+        A、导航守卫
+            全局的(主要掌握)
+            单个路由独享的
+            组件级
+                钩子  beforeRouterEnter(to,from,next){}  不能访问this，因为组件还未加载
+                钩子  beforeRouterUpdate(to,from,next){}
+                钩子  beforeRouterLeave(to,from,next){}
+
+
+            const router = new VueRouter({...})
+            router.beforeEach((to,from,next)=>{})
+            router.afterEach((to,from)=>{})
+            to:Route 即将要进入的目标，路由对象
+            from:Route 正要离开的路由，路由对象
+            next:Function 一定要调用该方法来resolve这个钩子，执行效果依赖next方法的调用参数
+
+
+        B、路由元信息
+            鉴权在这里做
+            $route.matched
+            /foo/bar 这个 URL 将会匹配父路由记录以及子路由记录
+            一个路由匹配到的所有路由记录会暴露为 $route 对象 (还有在导航守卫中的路由对象) 的 $route.matched 数组。
+            检查路由记录中的 meta 字段 ，我们需要遍历 $route.matched
+            router.beforeEach((to, from, next) => {
+                if (to.matched.some(record => record.meta.requiresAuth)) {
+                    // this route requires auth, check if logged in
+                    // if not, redirect to login page.
+                    if (!auth.loggedIn()) {
+                    next({
+                        path: '/login',
+                        query: { redirect: to.fullPath }
+                    })
+                    } else {
+                    next()
+                    }
+                } else {
+                    next() // 确保一定要调用 next()
+                }
+            })
+        C、其它
+            过渡效果  <transition>
+            数据获取  可以在导航完成前后获取数据
+            滚动行为  使用 scrollBehavior 方法定位
+            路由懒加载  结合vue的异步组件和Webpack的代码分割功能
+
+            <router-link to="">
+            <routerView/>  一个容器,把router-link中to的路由页面放到这里
+            <router-view></router-view> 嵌套路由,子路由放置在这里
+
+
+
+
+

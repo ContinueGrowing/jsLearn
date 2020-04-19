@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>这是子页面</div>
+    <input type=button value="调用parent.html中的say()函数" οnclick="callParent()"> 
+    <script type="text/javascript"> 
+        function say() 
+        { 
+            alert("child.html--->I'm at child.html"); 
+        } 
+        function callParent() {
+            console.log("callParent") 
+            parent.say(); 
+        } 
+    </script> 
+</body>
+</html>

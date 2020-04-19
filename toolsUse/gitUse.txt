@@ -8,6 +8,9 @@
     git add .
     git commit -m ""
     git push
-4.
+    git push origin master
+    git push origin dev
+4.clone某一个分支的代码
+    git clone -b dev git@XXXxxx.git 
 
 

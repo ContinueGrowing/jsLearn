@@ -1,0 +1,17 @@
+{
+  "name": "directive",
+  "version": "1.0.0",
+  "description": "自定义指令",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "自定义指令"
+  ],
+  "author": "hou",
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^2.6.11"
+  }
+}

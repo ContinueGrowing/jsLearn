@@ -1,0 +1,17 @@
+一、插件的用法
+    Vue.use(myPlugin)  本质上是调用 myPlugin.install(Vue)
+    使用插件必须在new Vue()之前完成，实例化之前就要配置好
+    如果使用Vue.use()多次注册相同插件，那就只会注册成功一次
+
+    //插件的写法
+    const RulesPlugin ={
+        install (Vue){
+            Vue.mixin({
+                const rules = this.$options.rules;
+                ...
+            })
+        }
+    }
+    //插件的使用
+    1.src引入
+    2.Vue.use(RulesPlugin)

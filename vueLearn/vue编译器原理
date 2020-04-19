@@ -1,0 +1,36 @@
+ondeNote里有截图
+this.$options
+我们所说的AST描述对象实际上就是根节点的AST对象
+一、parse   解析模板，把dom节点解析成为描述对象，生成AST对象
+            1.解析html字符串,提取信息(单个节点),
+                initAst={
+                    type:1,
+                }
+    function parse(template,options){
+        parseHTML(template,{
+            start:function(){}, //开始标签的钩子函数  
+                  1.完善ast对象 2处理特殊标签a,br等,保持与浏览器行为一致
+            end:function(){},   //结束标签的钩子函数
+            chars:function(){},   //文本标签的钩子函数
+            comment:function(){},   //注释的钩子函数
+        })
+    }
+    function parseHTML（html,options){
+        //1.定义一堆变量
+            stack[]  检测非一元标签是否缺少闭合标签  
+                    方法:先依次存储['div','span','a']
+            isUnaryTag$$1=false   检测一个标签是否是一元标签
+            canBeLeftOpenTag$$1=false  检测一个非一元标签是否可以省略闭合标签
+            index=0  解析html字符串是字符流读入的位置
+            last   存储还未解析的html字符串
+            lastTag   存储stack 栈顶的元素
+        //2.while循环  <div>{{message}}</div>
+            一步一步解析字符串
+    }
+
+二、optimize   在解析的过程中找到并标注静态节点
+三、generate   把解析成的描述对象处理成渲染函数所需要的字符串，给到渲染函数，在组件挂载过程中生成vnode
+三、_update(render())  判断是否是首次渲染 
+                    _patch_
+                    首次渲染   将vnode渲染成为真正的Dom
+                    非首次渲染  数据更新，新旧vnode进行对比,运行diff算法

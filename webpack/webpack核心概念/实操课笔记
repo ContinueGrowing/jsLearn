@@ -1,0 +1,49 @@
+1.如何不通过webpack配置文件直接打包
+    webpack-cli --entry 入口文件 --output 出口文件
+
+2.webpack默认的配置名是webpack.config.js
+    打包命令是  webpack
+    <1> webpack   直接以当前目录下名为webpack.config.js的文件作为配置文件进行打包
+    <2> webpack --config 配置文件名  指定一个文件作为配置文件进行打包
+
+3.全局webpack
+    通过npm install webpack -g 命令安装的webpack就是全局webpack，在 npm 全局目录下安装包
+    作用：是必装的，直接执行webpack就会用到全局webpack
+        只有一个
+4.局部webpack
+    指在项目文件夹下安装的webpack,安装在node_modules里的
+    局部webpack的作用:
+        当我们项目用到的webpack版本与全局webpack的版本不一致时，我们就需要局部安装webpack
+    局部安装指定版本的webpack  npm install webpack@3.10.0 --save
+    <1> 用局部的webpack打包
+        a.局部安装webpack
+        b.配置package.json
+        c.运行package.json里的命令
+
+5.编译es6
+    <1> 编译es6的语法  babel-loader
+    <2> 编译es6的方法
+        npm install babel-polyfill --save-dev
+        npm install babel-plugin-transform-runtime babel-runtime --save
+        
+        babel-polyfill的生效方式
+            1.生成一个全局对象
+            2.一般用于项目的开发
+                他会对所有需要编译的方法进行重写
+            3.使用babel-polyfill引入的两种方式,
+                a.在入口文件app.js中 import 'babel-polyfill'
+                b.entry:{
+                    app:['babel-polyfill','./app.js']
+                }
+        
+        babel-transform-runtime的生效方式
+            1.生成一个局部对象
+                只对我们使用到的方法重写
+            2.一般用于框架开发
+6.语法糖的编译
+    <1> Typescript
+        如何编译Typescript
+        a.安装loader    安装typescript和ts-loader
+        b.写入配置文件   ts-loader
+        c.编写 tsconfig.js  类似于.babelrc,ts-loader的额外配置
+

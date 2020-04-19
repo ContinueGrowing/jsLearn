@@ -1,0 +1,34 @@
+一、组件通信
+    1.父子  
+        //父传子
+        父:bind  ---->   子：props
+        每一次父组件传递的值发生改变，子的props就会更新，子的data和computed中可以获取到更新后的数据
+        不要在子中直接改变props中的值，这样会破坏单向数据流，难以维护
+        要想实现父子组件的双向数据绑定，使用v-model或sync修饰符
+            v-model a、会默认为组件绑定名为value的属性和名为input的事件，
+                    b、只能实现某一个属性的双向数据绑定
+                    c、子的props中接收数据
+            sync  a、可以自定义传入的属性和事件
+                  b、可以实现多个属性的双向数据绑定
+                  c、子用$attrs来接收数据
+
+            父通过$children 操作子组件
+            子通过$parent 操作父组件
+        //子传父
+        子：this.$emit("fuFunction",data)  --->  父:  @fuFunction="fuFunction"
+    2.非父子
+        a.使用中央事件总线(eventbus)来处理非父子组件间的通信
+            在要通信的两个组件中分别引入一个新的vue实例，分别调用这个实例的事件来触发和实现监听
+            var Event = new Vue();  //中央事件总线
+            Event.$emit('data-a',this.msg)//发送数据
+            Event.$on('data-a',msg =>{...}) //接收，写在mounted中
+        b.祖先通过provide提供数据，后代通过inject获取数据
+            //祖先
+            components:{},
+            provide(){
+                return {name:'aaa',age:'12'}
+            }
+            //子孙
+            inject:['name','age']
+        c.使用$attrs和listeners来实现祖孙组件通信
+        d.$root直接访问根组建

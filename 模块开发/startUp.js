@@ -54,16 +54,15 @@
 
 	}
 
-	var domArr = document.getElementsByTagName("script")[0];
 	// domArr = Array.from(domArr);
 	// domArr.forEach(function(item,index){
-	// 	console.log(item.src)
-	// })
+		// 	console.log(item.src)
+		// })
+	var domArr = document.getElementsByTagName("script")[0];
 	var uriFront = domArr.dataset.main+"/" || "";
 	console.log(uriFront)
 	//添加根目录
 	function addBase(id, uri) {
-		console.log(id)	//b.js
 		var result;
 		if (id.charAt(0) === ".") {
 			result = relapath((uri ? uri.match(/[^?]*\//)[0] : data.cwd) + uriFront + id);

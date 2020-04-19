@@ -2,3 +2,334 @@
     vue 框架    自己编写代码，然后框架调用解析生成代码
                 vue全家桶（vue + vue-rouer + vuex + axios）
                 数据驱动UI
+2.通过npm使用vue
+    1> npm init  
+        然后填写需要的信息 项目名字不能包含中文和大写字母  
+        生成package.json文件(删掉此文件可以重新init)
+    2> 使用npm install vue 
+        --save 会在package.json中的dependencies中写入(运行时依赖)
+        --save-dev 会在package.json中的devdependencies中写入(开发时依赖)
+        安装的包会自动放在node_modules文件夹中
+3.插值语法 
+    {{}}
+    <div v-once>{{}}</div>
+    <div v-bind:id="myId">{{}}</div>  简写 :id
+    app.$data.title = "";
+    v-html="<div></div>"
+4.模板语法
+    {{js表达式}}
+5.指令
+    带有v-前缀的特殊属性
+    指令的职责是，当表达式的值改变时 ，将其产生的连带影响，响应式的作用与DOM
+    v-cloak 解决初始化慢导致页面闪动的最佳实践(当网络慢的时候，页面还在加载vue源码)
+    v-for + key
+6.事件修饰符
+    @click.stop 阻止事件冒泡
+    @submit.prevent 阻止浏览器默认行为
+    @click.stop.prevent 
+    @click.capture 阻止捕获
+    @click.self
+    @click.once
+    @scroll.passive
+
+    keyCode事件已废弃
+    @keyup.enter
+    @keyup.page-down
+
+    系统修饰符
+    @keyup.alt.67    Alt+Ctrl
+    @click.ctrl      Ctrl+单机
+
+    其它修饰符
+    .exact 修饰符   注意：有且只有Ctrl被按下的时候才会被触发
+        @click.ctrl.exact
+    鼠标按钮修饰符   @click.left   @click.right  @click.middle
+7.计算属性Computed
+    对于任何复杂的逻辑，都应该使用计算属性
+    在一个计算属性中可以完成各种复杂的逻辑，包括运算，函数调用等，只要最终返回一个结果就可以
+    只要其中一个数据变化，计算属性就会重新执行，视图也会更新
+    3种方法
+        直接计算
+        计算属性计算    
+            1>包含getter和setter
+            2>基于依赖缓存
+            3>依赖数据改变=>触发setter和getter=>计算属性改变
+            4>可以依赖其它计算属性和其它实例数据
+        methods方法计算
+            1>本质上是实力上定义的普通函数，组件重新渲染，就会调用
+        如何选择？     是否需要缓存
+            遍历大数组和做大量计算，就使用计算属性
+            一个数据受多个数据影响时，就使用计算属性/watch
+
+        计算属性和watch的区别
+            计算属性返回的值会被缓存，其实是被当作属性来使用的
+            watch是一个对象，键：要监听的变量  值：新旧属性的值
+8.watch
+    data:{
+        price:"",
+        appleInfo:{
+            price:"",
+            number:""
+        }
+    }
+    watch:{
+        price:function(nVal,oVal){
+
+        },
+        appleInfo:{
+            handler:function(nVal,oVal){
+
+            },
+            deep:true,
+            immediate:true
+        }
+    }
+9.条件渲染
+10.列表渲染
+    1>  v-for  :key
+    v-for="item in items"
+    items可以是对象，可以是数组
+    items是对象的时候(value,name,index) in items,(值，键名，索引)
+    :key="index"
+    :key="item.label"
+    key虚拟dom算法，新旧节点对比，基于key的变化重新排列，并且移除key不存在的元素
+    同一个父元素的子元素必须拥有独特的key，重复的key会造成渲染错误
+    key在数据更新的时候能提高性能
+    2>  在template上使用v-for
+    3>  在组件上使用v-for
+11.数组更新
+    1> 触发视图更新的方法
+        push(),pop(),shift(),unshift(),splice(),sort(),reverse()
+    2> 不触发视图更新时，可以使用新数组替换旧数组
+        filter(),concat(),slice()
+    3> 两种情况不能监听
+        arr[0] = "qqq"
+        arr.length = 10;
+    4>显示数组经过过滤、排序后的结果，而不实际改变或重置原始数据
+        可以使用计算属性，返回过滤或排序后的数组
+12.不推荐同时使用v-if和v-for
+    原因:v-for优先级比v-if高，所以会先渲染出来再判断v-if
+13.表单处理
+     <input type="checkbox" :true-value="aaaa" v-model="myValue">
+     v-model.lazy       input事件同步转变为change中同步
+     v-model.number     将输入转换为Number类型
+     v-model.trim       自动过滤输入首尾的空格
+14.组件基础
+    1>  为什么使用组件？    代码复用,组件间进行通信
+    2>  组件使用的两种方式  
+            <my-component>  短横线分隔命名  dom中使用只支持此种方式
+            <MyComponent>   首字母大写命名 
+    3>  组件可以进行任意次数的复用，每个组件单独维护
+    4>  组件注册  两种方式
+            a>  全局注册 
+                <my-component :message="全局注册"></my-component>
+                Vue.component("my-component",{
+                    template:"<p>全局注册{{defaultMsg}}</p>",
+                    props:['message'],
+                    data:function(){
+                        //每复用一次组件就会返回一份新的data,
+                        //也就是为每一个组件实例创建了一个私有的数据空间(私有作用域)
+                        //而如果把data写成对象形式就会使多个组件共用同一个data
+                        return {
+                            defaultMsg: this.message
+                        }
+                    },
+                    computed:{},
+                    methods:{},
+                })
+            b>  局部注册
+                <con-a></con-a>
+
+                var ConA = {
+                    template:"<p>局部注册</p>"
+                }
+                new Vue({
+                    el:"#app",
+                    components: {
+                        "con-a":ConA
+                    }
+                })
+    5>  组件间传递数据
+        a>      prop  父 --> 子
+                dom中,驼峰命名的prop要使用横线分隔
+                单项数据流
+                父  
+                    <my-component msg="传递给子组件的数据"></my-component>
+                子
+                    Vue.component("my-component",{
+                        props:['msg'],
+                        template:'<div>{{msg}}</div>'
+                    })
+                    prop的数据验证
+                        String,Number,Boolean,Object,Array,Function,Symbol,Date
+                        Vue.component("my-component",{
+                            props:{
+                                message:Number,
+                                propObj:{
+                                    type : Object,
+                                    require : true
+                                }
+                            },
+                            template:'<div>{{msg}}</div>'
+                        })
+        b>      自定义事件  子 --> 父
+                一个组件上的v-model默认会利用名为value的prop和名为input的事件
+                使用v-on的.native修饰符监听原生事件
+                .sync修饰符  父组件监听自定义事件按需更新数据
+                子 
+                    用$emit()来触发事件
+                父  
+                    用$on()监听子组件的事件
+                1.接收一个value属性
+                2，在有新的value时触发input事件
+
+15.slot分发内容
+    插槽 vue提出来的一个概念，插槽用于决定将所携带的内容，插入到指定的某个位置，
+    从而使模板分块，具有模块化的特质和更大的重用性
+    当需要让组件组合使用,混合父组件的内容与子组件的模板时，就会用到Slot
+    a>  单个slot
+        在子组件内使用特殊的<slot>元素，就可以为这个子组件开启一个slot(插槽)
+        在父组件模板里，插入在子组件标签内的所有内容将替代子组件的<slot>标签及它的内容
+        <div>
+            <my-component>
+                <p>这是父组件插入子组件插槽的内容</p>
+            </mycomponent>
+        </div>
+        Vue.component("my-component",{
+            props:[''],
+            template:
+                '<div>
+                    <slot>
+                        <p>如果父组件中没有插入p的话，显示这个p</p>
+                    </slot>
+                </div>'
+        })
+    b>  具名slot 给slot添加一个name，具名slot可以和单个slot共存
+        <div>
+            <my-component>
+                <p slot="header">这是父组件插入子组件插槽的内容</p>
+            </mycomponent>
+        </div>
+        Vue.component("my-component",{
+            props:[''],
+            template:
+                '<div>
+                    <slot name="header">
+                        <p>如果父组件中没有插入p的话，显示这个p</p>
+                    </slot>
+                </div>'
+        })
+    c>  作用域slot  子组件传值给父组件
+        template替换子的slot
+        <div>
+            <my-component>
+                <template scope="props">
+                    <p>这是子组件传来的{{props.msg}}</p>
+                </template>
+            </mycomponent>
+        </div>
+        Vue.component("my-component",{
+            props:[''],
+            template:
+                '<div>
+                    <slot msg="子组件传递的内容">
+                    </slot>
+                </div>'
+        })
+16.单文件组件及自定义组件
+    <1>单文件组件   后缀为.vue的文件
+        a>结构  3个语言块  <template>  <script>  <style>
+    <2>自定义组件   类似element-ui
+        a>简单写法  
+            * 创建一个文件夹，里面创建myComponent.vue和myComponent.js文件
+            * 在main.js中或者需要使用这个组件的文件中import和Vue.use()
+
+17.动态组建及异步组件
+    <1>动态组件
+        <component>用来动态地挂载不同的组件，使用is来选择要挂载的组件，这用的组件叫做动态组建
+        可以使用<keep-alive>标签来开启缓存
+    <2>将组件定义为一个工厂函数，动态地解析组件，vue只在组件需要渲染时触发工厂函数，
+        并且把结果缓存起来，用于后面的再次渲染。这类组件叫做异步组件
+        <my-component></my-component>
+        Vue.component("my-component",function(resolve,reject){
+            setTimeout(()=>{
+                resolve({
+                    template:"<div>这是异步渲染的</div>"
+                })
+            },2000)
+        })
+18.渲染函数及JSX语法
+    <1> 渲染函数(render函数)
+        # 通过 createElement 函数创建虚拟DOM，渲染在vue页面中
+        # render的返回值就是虚拟节点
+        # createElement是一个函数，有三个参数,返回值是虚拟节点，他也是 render 函数的参数
+        # 3个参数
+            第1个参数 必选 html标签或组件或函数
+            第2个参数 可选 数据对象，在template中使用
+            第3个参数 可选 子节点
+            Vue.component("my-component",{
+                render:function(createElement){
+                    return createElement(
+                        'h'+this.level, //标签名称
+                        this.$slots.default //子节点数组
+                    )
+                },
+                props:{
+                    level:{
+                        type:Number,
+                        required:true
+                    }
+                }
+            })
+            new Vue({
+                el:"#app",
+                template:"<div><my-component>子节点的内容</my-component></div>"
+            })
+    <2> 认识节点、树、及虚拟DOM节点
+        VNode对象  每个DOM元素或组件都对应一个VNode对象
+        虚拟DOM的运行的原理
+            render  生成虚拟节点
+            createElement  基于虚拟节点创建DOM节点
+            diff算法  状态更新后，对比生成补丁对象
+            patch  遍历补丁对象，更新dom节点
+    <3> JSX语法及函数式组件
+        a>  JSX语法 react发明  js+xml
+            #  需要babel插件转译为普通的HTML   
+        b>  函数式组件
+                #  想象成组件里的一个函数，
+                   入参    渲染上下文
+                   返回值  渲染好的HTML
+                #  特性  
+                    Stateless (无状态)  组件自身是没有状态的
+                    Instanceless(无实例)   组件自身没有实例，也就是没有this
+                    参数靠context来传递
+                #  普通函数式组件   向子元素或子建传递特性和事件
+                     要求显示定义prop的特性
+                    Vue.component('my-btn',{
+                        functional:true,    //标识这是一个函数式的组件
+                        render:function(createElement,context){
+                            //完全透传任何特性、事件监听器、子节点等
+                            return createElement('button',context.data,context.children)
+                        }
+                    })
+                #   模板函数式组件
+                    需要 手动 添加特性和监听器
+                    <template functional>
+                        <button
+                            class="btn"
+                            v-bind="data.attrs"
+                            v-on="listeners"
+                        >
+                    </template>
+                #   slots()和children对比
+                    children 有2个段落标签
+                    slots().default 只传递<p>second</p>
+                    slots().foo 传递<p v-slot:foo>first</p>
+                    同时拥有slots和children可以让你选择让组件感知某个插槽机制
+                    或者简单的传递children，移交其它组件去处理
+                    <my-functional-component>
+                        <p v-slot:foo>
+                            first
+                        </p>
+                        <p>second</p>
+                    </my-functional-component>

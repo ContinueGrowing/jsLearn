@@ -1,0 +1,34 @@
+一、 配置文件
+    我们主要工作就是编写、修改配置文件，是webpack 打包的依据
+二、 核心概念
+    Entry  打包入口
+        1. 从哪里开始打包
+        2. 程序的起点
+
+    loader  大部分都是第三方开发，需要额外扩展的
+        webpack 自身只能处理js,所以处理别的资源需要loader
+        webpack 自身只能负责打包，相关的编译工作需要loader
+        loader本质是一个方法，使用时大多需要额外安装
+        module:{
+            rules:[{...}]
+        }
+        常用的loader:
+            1.css-loader,style-loader等处理css
+            2.url-loader,image-loader等处理图片字体文件
+            3.less-loader,sass-loader，babel-loader等编译loader
+            3.vue-loader等语法糖loader
+
+    plugin 提供给webpack的额外扩展
+        帮助webpack优化代码
+        plugin 有的是webpack自带的，有的是需要额外安装的
+        plugins:[
+            new ...()
+        ]
+        常用的plugin
+            1.优化文件体积的插件
+            2.热更新插件
+
+
+    Output  出口  
+        1. 打包后的文件放在哪
+        2. 叫什么名字

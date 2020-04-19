@@ -1,0 +1,8 @@
+一、  commonJS只能在node环境下使用,专属于node的模快化规范
+      AMD/CMD/UMD  额外引入文件，需人工处理
+      es6 Module  存在兼容性问题
+二、  所以我们使用webpack来解决上述问题
+      webpack 支持  commonJS、AMD、ES6 Module 
+      webpack 是运行在node环境中的，所以写webpack代码只能使用commonJS的方式
+      而项目中我们可以使用es6 Module 和 AMD
+

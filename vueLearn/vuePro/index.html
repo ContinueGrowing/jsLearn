@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="node_modules/vue/dist/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div @click="say('aaa',$event)">{{fu}}</div>
+        <my-component v-model="fu"></my-component>
+        <a-component>
+            <slot>
+                <p>这是父组件插入到子组件的内容</p>
+            </slot>
+            <p slot="name">这是给nameslot传递的内容</p>
+        </a-component>
+        <b-component>
+            <template scope="props">
+                <h1>父组件中的template会替换子组件中的slot</h1>
+                <p>{{props.msg}}</p>
+            </template>
+        </b-component>
+    </div>
+    <script>
+        // 1.接收一个value属性
+        // 2，在有新的value时触发input事件
+        Vue.component("my-component",{
+            template:"<input :value='value' @input='zIpt'></input>",
+            props:['value'],
+            data:function(){
+                return {
+                    
+                }
+            },
+            computed:{},
+            methods:{
+                zIpt(e){
+                    this.$emit("input",e.target.value)
+                }
+            },
+        })
+        Vue.component("a-component",{
+            template:"<div><slot><p>如果父组件没有插入内容，将显示这个内容</p></slot><slot name='name'><p>父组件没有给nameslot插入内容</p></slot></div>",
+            props:[],
+            data:function(){
+                return {
+                    
+                }
+            },
+            computed:{},
+            methods:{
+                zIpt(e){
+                    this.$emit("input",e.target.value)
+                }
+            },
+        })
+        Vue.component("b-component",{
+            template:"<div><slot msg='这是子组件传给父组件的值'></slot></div>",
+            props:[],
+            data:function(){
+                return {
+                    
+                }
+            },
+            computed:{},
+            methods:{
+                zIpt(e){
+                    this.$emit("input",e.target.value)
+                }
+            },
+        })
+        new Vue({
+            el:"#app",
+            data:{
+                fu:"父组件"
+            },
+            methods:{
+                say:function(msg,e){
+                    alert(msg);
+                    console.log(e)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

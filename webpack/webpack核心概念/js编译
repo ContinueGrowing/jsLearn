@@ -1,0 +1,2 @@
+一、es6的编译  babel-loader
+    需要安装的loader npm install babel-loader @babel/core --save-dev

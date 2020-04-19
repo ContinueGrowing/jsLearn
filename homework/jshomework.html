@@ -9,7 +9,17 @@
 </head>
 
 <body>
+    <input type=button value="调用child.html中的函数say()" οnclick="callChild()"> 
+    <iframe name="myFrame" src="./child.html"></iframe> 
     <script>
+        function say() { 
+            alert("parent.html------>I'm at parent.html"); 
+        } 
+        function callChild() 
+        { 
+            //document.frames("myFrame").f1(); 
+            myFrame.window.say(); 
+        } 
         var a = 1;
         var b = [];
         var c = '';
