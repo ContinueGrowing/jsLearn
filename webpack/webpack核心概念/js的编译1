@@ -40,6 +40,7 @@
             1.生成一个局部对象
                 只对我们使用到的方法重写
             2.一般用于框架开发
+        .babelrc文件中写入options的全部内容，webpack会自动读取
 6.语法糖的编译
     <1> Typescript
         如何编译Typescript

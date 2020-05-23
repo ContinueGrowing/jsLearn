@@ -1,0 +1,32 @@
+一、生产环境  production  压缩代码体积
+    去除无用代码
+    图片压缩
+    提取公用代码
+
+二、开发环境  development  代码检查,帮助调试代码
+    webpack-dev-server
+    source-map
+    代码风格检查
+
+三、如何告诉webpack当前环境
+    webpack --env envname
+    webpack --config webpack.common.js --env development
+四、如何编写不同的配置文件来区分环境
+    1.编写一个开发环境下的配置文件
+    2.编写一个生产环境下的配置文件
+    3.在基础的配置引入开发和生产配置
+    4.判断env参数，合并对应的配置
+        npm install webpack-merge
+        return merge(common,env === "production"?pro:dev)
+
+五、在不同的环境下需要不同的插件
+    以雪碧图为例(postcss的一个插件)
+    plugins:env === "production" ? [
+        require({
+            spritePath:"/dist/sprite",
+            retina:true,
+        })
+    ] :
+    []
+六、webpack4中的环境区分
+    webpack --mode production/development/none

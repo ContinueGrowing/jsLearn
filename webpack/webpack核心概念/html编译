@@ -1,0 +1,30 @@
+一、HTML生成
+    1.需要用到的plugin
+    npm install html-webpack-plugin --save -dev
+    2.相关配置
+        filename:打包生成的html名字
+        template:指定一个html文件为模板
+        minify:压缩html
+        inject:是否吧js、css文件插入到html，插入到哪
+        chunks:多入口时，指定引入chunks
+二、使用步骤
+    1.引入插件
+        var htmlWebpackPlugin = require("html-webpack-plugin");
+    2.在plugins里注册
+        plugins:[
+            new htmlWebpackPlugin({
+                filename:"index.html",
+                template:"./index.html",
+                minify:{
+                    collapseWhitespace:true
+                },
+                //是否自动引入打包后的js和css  默认为true
+                inject:true,
+                //多入口文件==>多个结果文件
+                //chunks 指定引入哪个js和css打包文件
+                chunks:['app']
+            })
+        ]
+三、
+四、
+五、

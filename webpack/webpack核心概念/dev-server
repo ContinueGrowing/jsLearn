@@ -1,0 +1,68 @@
+一、webpack-dev-server的作用
+    模拟线上环境调试项目
+    1.路径重定向 ，给找不到的路径重定向
+    2.浏览器中看编译错误
+    3.接口代理，解决跨域问题
+    4.热更新
+二、使用步骤
+    1.安装 webpack-dev-server
+    2.配置devServer字段
+        devServer:{
+            port:9001,
+            inline:true,
+            overlay:true,
+            //保持在当前页面不变
+            historyApiFallback:true,
+            //自定义规则
+            historyApiFallback:{
+                rewrites:[
+                    {
+                        from:/^\/([ -~]+)/,
+                        to:function(context){
+                            return './'+context.match[1]+'.html'
+                        }
+                    }
+                ]
+            },
+            proxy:{
+                "/":{
+                    target:"153.21.21.0",
+                    changeOrigin:true,
+                    pathRewrite:{
+                        "^/comments":"/api/comments"
+                    },
+                    headers:{
+
+                    }
+                }
+            },
+            hot:true,
+            hotOnly:true,
+        }
+        inline  服务的开启模式
+        historyApiFallback  路径重定向  404
+        Hot  热更新 与extractTextCss不兼容，不能同时使用
+        lazy  懒编译
+        overlay  错误遮罩
+        proxy  代理
+    3.利用命令行开启服务
+        "dev":"webpack-dev-server"
+三、source-map
+    1.帮助我们知道打包后的文件在源文件的位置
+    2.使用
+        devtool:"eval-source-map"
+    3.source-map模式
+        a.开发模式
+            eval  
+            eval-source-map
+            cheap-eval-source-map
+            cheap-module-source-map//一般使用
+        b.生产模式
+            source-map  //一般使用
+            hidden-source-map
+            nosource-source-map
+    4.
+四、
+五、
+六、
+七、

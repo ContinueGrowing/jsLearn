@@ -1,2 +1,36 @@
 一、es6的编译  babel-loader
     需要安装的loader npm install babel-loader @babel/core --save-dev
+    @babel/core 是 babel-loader的编译核心
+    1.编译es6的语法(不是方法)
+    Presets是储存js不同标准的插件，通过使用正确的Presets，告诉babel按照那个标准编译
+    必需使用presets才会把es6编译成es5
+    使用presets需要先安装npm install @babel/preset-env --save-dev
+    然后给babel-loader配置presets
+    rules: [
+        {
+            test: /\.js$/,
+            use: {
+                loader:"babel-loader",
+                options:{
+                    "presets":[
+                        ["@babel/preset-env",{
+                            "targets":{
+                                //编译目标 3个标准  
+                                //-浏览器(通常) -node版本 -特定浏览器的某个版本
+                                "browsers":[">1%","last 2 versions"]
+                                // node:"10"
+                                //chrome:"59"
+                            }
+                        }]
+                    ],
+                    "plugins": [
+                        ["@babel/transform-runtime"]
+                    ]
+                }
+            }
+        },
+    ]
+    2.编译es6的方法
+      使用 babel-polyfill  
+      或 babel-plugin-transform-runtime
+      

@@ -1,0 +1,134 @@
+一、如何引入CSS
+    1.css-loader让css可以被js正确的引入
+        minimize : 是否压缩css (webpack4已经移除，使用uglify代替)
+        module : 是否使用css模块化 true
+        alias : css中的全局别名(webpack4已经移除) 
+        如果css开启了module:true,
+        global 的类名不会转码
+        local 的类名会被转码
+
+        :global .bgGlobal{
+            border:1px solid red;
+        }
+        :local .bgLocal{
+            background-color:pink;
+            //继承
+            composes:bgGlobal;
+            composes:otherStyle from './test.css';
+        }
+        配置示例
+        {
+            test:/\.css$/,
+            use:'css-loader',
+            options:{
+                module:{
+                    //把local的类名指定形式 test2_div1_1522
+                    localIdentName:'[path][name]_[local]_[hash:4]',
+                }
+            }
+        },
+
+    2.style-loader 让css被引入后可以正确地以一个style标签插入页面
+        核心配置：
+            insertAt style标签插入在哪一块区域(很少使用)
+            insertInto 插入指定的dom(很少使用)
+            singleton 是否合并为一个style标签
+            transform 在浏览器环境下，插入style到页面前，用js对css进行操作
+            {
+                test:/\.css$/,
+                use:'style-loader',
+                options:{
+                    insertAt:'top',
+                    insertInto:'#mydiv',
+                    singleton:true,
+                    //在css放到页面之前用js对css进行修改
+                    transform:"./transform.js",
+                }
+            },
+    3.两者顺序很重要,先css-loader再style-loader
+
+二、less、sass等预处理语言的编译
+    1.less编译
+        需要less和less-loader
+        @base:green;
+        {
+            loader:'less-loader',
+        },
+    2.sass编译
+        需要sass-loader和node-sass
+三、如何把css打包成一个单独的文件
+    1.安装插件
+        //webpack4环境下
+        npm install extract-text-webpack-plugin@next webpack --save
+    2.改造loader的写法
+        a、先引入插件
+           var extractTextCss = require('extract-text-webpack-plugin')
+        b、把use改为使用该插件
+            rules:[
+                {
+                    test:/\.less$/,
+                    use:extractTextCss.extract({
+                        fallback:{
+                            loader:'style-loader',
+                            options:{
+                                insertAt:'top',
+                                insertInto:'#mydiv',
+                                singleton:true,
+                                //在css放到页面之前用js对css进行修改
+                                transform:"./transform.js",
+                            }
+                        }
+                        use:[
+                            {
+                                loader:'css-loader',
+                                options:{
+                                    module:{
+                                        //把local的类名指定形式 test2_div1_1522
+                                        localIdentName:'[path][name]_[local]_[hash:4]',
+                                    }
+                                }
+                            },
+                            {
+                                loader:'less-loader',
+                            },
+                        ]
+                    })
+                },
+                plugins:[
+                    new extractTextCss({
+                        //app.min.css  [name]为entry的名字
+                        filename:'[name].min.css'
+                    })
+                ]
+            ]
+            打包完成之后，需要手动在html文件中引入app.min.css
+    3.在plugin里添加该插件
+四、postcss 自动加前缀
+    postcss postcss-loader autoprefixer postcss-cssnext
+    1.位置在less-loader和css-loader之间
+    {
+        loader:'postcss-loader',
+        options:{
+            ident:"postcss",
+            plugins:[
+                require("autoprefixer")({
+                    "overrideBrowerslist":{
+                        ">1%","last 2 versions"
+                    }
+                }),
+                //使用下一代css的语法，只需要引入就可以
+                require("postcss-cssnext")
+            ]
+        }
+    }
+    2.可以写在package.json中
+    "browerslist":[
+        ">1%","last 2 versions"
+    ]
+五、下一代css的语法
+    .border-yellow:{
+        border:1px solid var(--mainColor);
+    }
+    :root{
+        --mainColor:red;
+    }
