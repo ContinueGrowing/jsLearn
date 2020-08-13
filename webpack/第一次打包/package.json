@@ -477,7 +477,7 @@
     "safe-regex": "^1.1.0",
     "schema-utils": "^1.0.0",
     "semver": "^5.7.1",
-    "serialize-javascript": "^2.1.2",
+    "serialize-javascript": "^4.0.0",
     "set-value": "^2.0.1",
     "sha.js": "^2.4.11",
     "setimmediate": "^1.0.5",
